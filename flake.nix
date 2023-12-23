@@ -15,33 +15,12 @@
         pkgs = import inputs.nixpkgs {inherit system;};
       in {
         defaultPackage.${system} = inputs.home-manager.defaultPackage.${system};
-        homeConfigurations.macos-silicon = inputs.home-manager.lib.homeManagerConfiguration {
+        homeConfigurations.macos-silicon = import ./home.nix {
+          inherit system;
+          inherit username;
           inherit pkgs;
-          modules = [
-            ({pkgs, ...}: {
-              home = {
-                stateVersion = "23.11";
-                username = "${username}";
-                homeDirectory = "/Users/${username}";
-                packages = [
-                  pkgs.cowsay
-                ];
-              };
-              programs = {
-                home-manager = {
-                  enable = true;
-                };
-                git = {
-                  enable = true;
-                  userName = "Steven Troxler";
-                  userEmail = "steven.troxler@gmail.com";
-                  aliases = {
-                    check = "checkout";
-                  };
-                };
-              };
-            })
-          ];
+          make-homeConfiguration =
+            inputs.home-manager.lib.homeManagerConfiguration;
         };
       })
       {

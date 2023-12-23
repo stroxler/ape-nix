@@ -73,3 +73,35 @@ language rather than magic libraries at least at first:
    plumbing works by defining a defaultPackage for x86_64-darwin. You can see
    that this works by running `nix flake show .`.
 
+# What goes into a home-manager configuration?
+
+It appears that at the minimum you must pass it an attrset containing `pkgs`
+and `modules`. The former is a handle to nixpkgs for one system; the latter is
+a list of home-manager modules.
+
+A home-manager module can be either an attrset or a function that takes
+an attrset provided by home-manager (which will include a few things, one of
+them `pkgs`) and returns an attrset.
+
+The contents of the attrset from a module is any collection of keys as described
+in [the manual](https://nix-community.github.io/home-manager/options.xhtml).
+
+My preference for the moment is to make my modules attrsets already rather than
+functions, the reason being that this allows me to do more work in nix myself
+rather than relying on magic plumbing from home-manager; for example I do need
+`pkgs`, but I can pass it down directly rather than handing it off java-beans
+style.
+
+I prefer this for two reasons:
+- It makes control flow more explicit, which is nice while I'm getting used
+  to nix.
+- It makes it possible for me to pass extra keys that home-manager may not know
+  about, for example if I need to have conditional logic based on `system` or
+  some other configuration-specific information then I can just pass it down
+  myself using the nix language, without worrying about the "home-manager" way
+  of doing it.
+  - This may come at the price of uglier syntax, but I'm basically choosing to
+    use a programming language as my abstraction instead of a framework, which
+    in my experience is a better bet (because languages are composable and
+    usually easy to document in near-perfect detail, frameworks are not).
+
