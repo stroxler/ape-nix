@@ -16,7 +16,7 @@
     homeConfigurations.${username} = inputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        {
+        ({pkgs, ...}: {
           home = {
             stateVersion = "23.11";
             username = "${username}";
@@ -38,7 +38,7 @@
               };
             };
           };
-        }
+        })
       ];
     };
   };
