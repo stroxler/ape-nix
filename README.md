@@ -105,3 +105,26 @@ I prefer this for two reasons:
     in my experience is a better bet (because languages are composable and
     usually easy to document in near-perfect detail, frameworks are not).
 
+
+Note that if you mess something up, you'll often get a complaint about a
+missing `activationPackage`. This complaint is coming directly from nix, not
+from home-manager: what it actually means is that the function that
+*constructs* the actual nix config to power home manager
+(`home-manager.lib.homeManagerConfiguration`) did not execute successfully.
+
+So if you get that error, what you want to make sure of is that:
+- `homeConfigurations.<name-of-config>` exists
+- its value is the result of calling `home-manager.lib.homeManagerConfiguration`
+- the attrset passed to the call ^^ was valid (so it must include at the very
+  least a `pkgs` and a list `modules`.
+
+# Some more notes
+
+To edit nix files, for the moment I am just borrowing `zmre`'s setup. If you have
+nix with flakes set up you can just run:
+```
+nix run github:/zmre/pwnvim # (optionally filename)
+```
+to drop into a neovim session with great nix language support hooked up; it's
+a huge help to have this when hacking nix configs.
+
