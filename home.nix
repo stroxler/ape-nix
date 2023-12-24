@@ -16,6 +16,14 @@ make-homeConfiguration {
         packages = [
           pkgs.cowsay
         ];
+        file = {
+          # Note: .inputrc only affects readline using tools, which includes
+          # bash but not zsh (bindkey directives control this in zsh).
+          ".inputrc".text = ''
+            "\e[A": history-search-backward
+            "\e[B": history-search-forward
+          '';
+        };
       };
       programs = {
         home-manager = {
@@ -31,6 +39,21 @@ make-homeConfiguration {
           ignores = [
             "result"
           ];
+        };
+        zsh = {
+          enable = true;
+          antidote = {
+            enable = true;
+            plugins = [
+              "zsh-users/zsh-syntax-highlighting"
+              "zsh-users/zsh-autosuggestions"
+              "zsh-users/zsh-history-substring-search"
+            ];
+          };
+          envExtra = ''
+            bindkey '^[[A' history-substring-search-up # or '\eOA'
+            bindkey '^[[B' history-substring-search-down # or '\eOB'
+          '';
         };
       };
     }
