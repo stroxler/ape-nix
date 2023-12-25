@@ -28,6 +28,7 @@ make-homeConfiguration {
     {
       home = {
         file = {
+          ".config/starship.toml".source = ./dotfiles/starship.toml;
           # Note: .inputrc only affects readline using tools, which includes
           # bash but not zsh (bindkey directives control this in zsh).
           ".inputrc".text = ''
@@ -39,9 +40,8 @@ make-homeConfiguration {
     }
     {
       programs = {
-        home-manager = {
-          enable = true;
-        };
+        home-manager.enable = true;
+        bash.enable = true;
       };
     }
     {
@@ -72,6 +72,14 @@ make-homeConfiguration {
           bindkey '^[[A' history-substring-search-up # or '\eOA'
           bindkey '^[[B' history-substring-search-down # or '\eOB'
         '';
+      };
+    }
+    {
+      programs.starship = {
+        enable = true;
+        enableBashIntegration = true;
+        enableFishIntegration = true;
+        enableZshIntegration = true;
       };
     }
   ];
