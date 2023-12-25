@@ -3,8 +3,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-23.11";
     nixpkgsUnstable.url = "github:NixOS/nixpkgs/master";
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs: let
     username = "stroxler";
