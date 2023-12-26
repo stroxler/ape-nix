@@ -20,7 +20,7 @@ make-homeConfiguration {
     {
       home = {
         packages = [
-          pkgs.cowsay
+          pkgs.nix-darwin
           pkgs.neovim
         ];
       };
