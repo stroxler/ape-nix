@@ -20,6 +20,7 @@ make-darwinConfiguration {
         casks = [
           "clipy"
           "emacs"
+          "firefox"
           "google-chrome"
           "iterm2"
           "rectangle"
