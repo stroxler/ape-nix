@@ -1,0 +1,29 @@
+- Okay, first off let's list off what is actually *done* at this point:
+  - zsh seems to be good for now (I don't really need the omz stuff I had)
+    - I probably do need to add a hook for sourcing from a directory though
+  - starship is on par with dotconfar
+
+- Todo backlog is therefore:
+  - deal with some more programs
+    - 
+    - git config is incomplete, figure out what's missing
+    - 
+  - backlog stuff / open questions
+    - how much of my xsh is needed if I'm switching to nix-first?
+  - futz with nix itself:
+    - move `home.nix` to a `home-manager` directory
+    - figure out how to name flake attributes so that my top-level can
+      contain both home-manager configs and nix-darwin configs
+    - bootstrap a nix-darwin config
+    - once I get back to CA, make an intel darwin setup
+    - once I get back to work, start building out an x86 linux setup
+
+
+- Figure out how to factor things out of home into helper functions / modules
+  - Split out git, and add more config
+  - Split out zsh, and add more config(?)
+- Fix the warning by unifying home-manager and nixpkgs versions
+- Add starship soon, that's the last thing I really need to feel unstuck
+
+- At that point I could maybe pause and try to actually start some kind
+  of flake-based project - probably an ocaml or python PL toy

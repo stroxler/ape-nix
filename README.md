@@ -34,14 +34,16 @@ At that point, you will have a `results/` directory, and you should have
 
 Next, you can run
 ```
-result/bin/home-manager --flake .#macos-silicon switch
+result/bin/home-manager --flake .#aarch64-darwin switch
 ```
 to actually run home manager configured for `aarch64-darwin`.
 
 Note that the namespacing of the home configuration to point at isn't super
-obvious; the actual key in the flake value is
-`homeConfigurations.macos-silicon`, but home manager seems to inject the
-`homeConfigurations` on its own so we give it the path `.#macos-silicon`.
+obvious; home-manager expects the key name to live inside `homeConfigurations`
+(it will look in some other places too).
+
+The name of the configuration is arbitrary if you specify it directly; I'm
+using the system name for simplicitly.
 
 # What's actually going on here?
 

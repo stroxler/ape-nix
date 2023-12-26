@@ -17,7 +17,7 @@
         pkgs = import inputs.nixpkgs {inherit system;};
       in {
         defaultPackage.${system} = inputs.home-manager.defaultPackage.${system};
-        homeConfigurations.macos-silicon = import ./home.nix {
+        homeConfigurations.${system} = import ./home.nix {
           inherit system;
           inherit username;
           inherit pkgs;
