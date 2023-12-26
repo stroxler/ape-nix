@@ -13,6 +13,8 @@ make-darwinConfiguration {
       system.stateVersion = 4;
       nix.useDaemon = true;
       homebrew = {
+        # nix-darwin prevents cli use of brew, so to search use
+        # the website at https://formulae.brew.sh/
         enable = true;
         caskArgs.no_quarantine = true;
         global.brewfile = true;
