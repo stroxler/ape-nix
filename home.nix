@@ -78,6 +78,7 @@ make-homeConfiguration {
           ];
         };
         envExtra = ''
+          # Set up/down arrow in zsh
           bindkey '^[[A' history-substring-search-up # or '\eOA'
           bindkey '^[[B' history-substring-search-down # or '\eOB'
         '';

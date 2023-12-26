@@ -12,6 +12,20 @@ make-darwinConfiguration {
     {
       system.stateVersion = 4;
       nix.useDaemon = true;
+      nix.extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+      environment = {
+        shells = with pkgs; [ bash zsh ];
+        loginShell = pkgs.zsh;
+        systemPackages = [ pkgs.coreutils ];
+        systemPath = [ "/opt/homebrew/bin" ];
+        pathsToLink = [ "/Applications" ];
+      };
+      fonts = {
+        fontDir.enable = true;  # only allow nix to control fonts
+        fonts = [ (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; }) ];
+      };
       homebrew = {
         # nix-darwin prevents cli use of brew, so to search use
         # the website at https://formulae.brew.sh/
@@ -20,12 +34,12 @@ make-darwinConfiguration {
         global.brewfile = true;
         masApps = {};
         casks = [
+          "amethyst"
           "clipy"
           "emacs"
           "firefox"
           "google-chrome"
           "iterm2"
-          "rectangle"
           "spotify"
           "visual-studio-code"
         ];
