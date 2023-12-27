@@ -11,20 +11,49 @@ make-darwinConfiguration {
   modules = [
     {
       system.stateVersion = 4;
+      system.defaults = {
+        trackpad.TrackpadThreeFingerDrag = true;
+        dock.autohide = true;
+        finder = {
+          AppleShowAllExtensions = true;
+          _FXShowPosixPathInTitle = true;
+        };
+        NSGlobalDomain = {
+          AppleShowAllExtensions = true;
+          InitialKeyRepeat = 14;
+          KeyRepeat = 1;
+        };
+      };
       nix.useDaemon = true;
       nix.extraOptions = ''
         experimental-features = nix-command flakes
       '';
+      documentation.enable = true;
       environment = {
-        shells = with pkgs; [ bash zsh ];
+        shells = with pkgs; [bash zsh];
         loginShell = pkgs.zsh;
-        systemPackages = [ pkgs.coreutils ];
-        systemPath = [ "/opt/homebrew/bin" ];
-        pathsToLink = [ "/Applications" ];
+        systemPackages = [pkgs.coreutils];
+        systemPath = ["/opt/homebrew/bin"];
+        pathsToLink = ["/Applications"];
       };
       fonts = {
-        fontDir.enable = true;  # only allow nix to control fonts
-        fonts = [ (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; }) ];
+        fontDir.enable = true; # only allow nix to control fonts
+        fonts = [
+          (pkgs.nerdfonts.override {
+            fonts = [
+              "FiraCode"
+              "Hasklig"
+              "DroidSansMono"
+              "DejaVuSansMono"
+              "iA-Writer"
+              "JetBrainsMono"
+              "Meslo"
+              "SourceCodePro"
+              "Inconsolata"
+              "NerdFontsSymbolsOnly"
+            ];
+          })
+        ];
       };
       homebrew = {
         # nix-darwin prevents cli use of brew, so to search use
@@ -34,7 +63,7 @@ make-darwinConfiguration {
         global.brewfile = true;
         masApps = {};
         casks = [
-          "amethyst"
+          "rectangle"
           "clipy"
           "emacs"
           "firefox"
@@ -44,6 +73,7 @@ make-darwinConfiguration {
           "visual-studio-code"
         ];
       };
+      security.pam.enableSudoTouchIdAuth = true;
     }
   ];
 }

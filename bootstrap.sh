@@ -18,22 +18,12 @@ ARCH="$(
 OS="$(uname | tr '[:upper:]' '[:lower:]')"
 SYSTEM="${ARCH}-${OS}"
 
-# Boostrap home manager
+# Build and run home manager
 nix build '.#home-manager'
 ./result/bin/home-manager --flake ".#${SYSTEM}" switch
 
-# Run the installs
+# Build and run darwin-rebuild (nix-darwin) if on macos
 if [[ $OS == 'darwin ]]; then
   nix build '.#darwin-rebuild'
   ./result/bin/darwin-rebuild --flake ".#${SYSTEM}" switch
 fi
-
-
-nix build '.#darwin-rebuild'
-# TODO: add some further bootstrap logic:
-# - Anything from my older ape-osx that I can't port to nix
-# - Editor configurations
-# - It might be nice to eventually build a checklist of gui options
-#   to set that I can't figure out how to do using nix-darwin.
-#   
-

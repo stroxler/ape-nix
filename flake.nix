@@ -25,7 +25,12 @@
     nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate {} [
       (let
         system = "aarch64-darwin";
-        pkgs = import nixpkgs {inherit system;};
+        pkgs = import nixpkgs {
+          inherit system;
+
+          # needed mainly for Microsoft fonts
+          config = {allowUnfree = true;};
+        };
       in {
         # `nix build` able binaries, for bootstrapping
         packages.${system} = {
