@@ -21,7 +21,7 @@ make-darwinConfiguration {
         NSGlobalDomain = {
           AppleShowAllExtensions = true;
           InitialKeyRepeat = 14;
-          KeyRepeat = 1;
+          KeyRepeat = 5;
         };
       };
       nix.useDaemon = true;
