@@ -69,8 +69,10 @@ make-darwinConfiguration {
           "firefox"
           "google-chrome"
           "iterm2"
+	  "obs"
           "spotify"
           "visual-studio-code"
+	  "zoom"
         ];
       };
       security.pam.enableSudoTouchIdAuth = true;
