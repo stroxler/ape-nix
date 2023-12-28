@@ -20,7 +20,6 @@ make-homeConfiguration {
     {
       home = {
         packages = [
-          pkgs.nix-darwin
           pkgs.neovim
         ];
       };
