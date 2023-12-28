@@ -21,6 +21,9 @@ make-homeConfiguration {
       home = {
         packages = [
           pkgs.neovim
+          pkgs.ripgrep
+          pkgs.tree
+          pkgs.eternal-terminal
         ];
       };
     }
@@ -43,6 +46,7 @@ make-homeConfiguration {
       programs = {
         home-manager.enable = true;
         bash.enable = true;
+        fish.enable = true;
       };
     }
     {
