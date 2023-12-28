@@ -20,7 +20,7 @@ SYSTEM="${ARCH}-${OS}"
 
 # Build and run home manager
 nix build '.#home-manager'
-./result/bin/home-manager --flake ".#${SYSTEM}" switch
+./result/bin/home-manager --flake ".#${SYSTEM}" switch -b backup
 
 # Build and run darwin-rebuild (nix-darwin) if on macos
 if [[ $OS == 'darwin ]]; then
