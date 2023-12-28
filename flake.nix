@@ -12,52 +12,56 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgsUnstable,
-    home-manager,
-    nix-darwin,
-    ...
-  }: let
-    username = "stroxler";
-  in
-    nixpkgs.lib.foldl' nixpkgs.lib.recursiveUpdate {} [
-      (let
-        system = "aarch64-darwin";
-        pkgs = import nixpkgs {
-          inherit system;
+  outputs =
+    { self
+    , nixpkgs
+    , nixpkgsUnstable
+    , home-manager
+    , nix-darwin
+    , ...
+    }:
+    let
+      username = "stroxler";
+      pkgs-for-system = system: import nixpkgs {
+        inherit system;
 
-          # needed mainly for Microsoft fonts
-          config = {allowUnfree = true;};
+        # needed mainly for Microsoft fonts
+        config = { allowUnfree = true; };
+      };
+      home-manager-bin-and-config = system:
+        let pkgs = pkgs-for-system system; in
+        {
+          packages.${system}.home-manager = home-manager.defaultPackage.${system};
+          homeConfigurations.${system} = import ./home.nix {
+            inherit system;
+            inherit username;
+            inherit pkgs;
+            make-homeConfiguration =
+              home-manager.lib.homeManagerConfiguration;
+          };
         };
-      in {
-        # `nix build` able binaries, for bootstrapping
-        packages.${system} = {
-          home-manager = home-manager.defaultPackage.${system};
-          darwin-rebuild = nix-darwin.packages.${system}.default;
-          default = self.packages.${system}.home-manager;
-        };
-        # home manager configs. Build these with:
-        #   nix build .#home-manger
-        #   ./result/bin/home-manager --flake '.#[system]` switch
-        homeConfigurations.${system} = import ./home.nix {
-          inherit system;
-          inherit username;
-          inherit pkgs;
-          make-homeConfiguration =
-            home-manager.lib.homeManagerConfiguration;
-        };
-        darwinConfigurations.${system} = import ./darwin.nix {
-          inherit system;
-          inherit username;
-          inherit pkgs;
-          make-darwinConfiguration =
-            nix-darwin.lib.darwinSystem;
-        };
-      })
-      {
-        packages.x86_64-darwin.default = home-manager.defaultPackage.x86_64-darwin;
-      }
+      nix-darwin-bin-and-config = system:
+        if (system != "x86_64-darwin" && system != "aarch64-darwin")
+        then { }
+        else
+          let pkgs = pkgs-for-system system; in {
+            packages.${system}.darwin-rebuild = nix-darwin.packages.${system}.default;
+            darwinConfigurations.${system} = import ./darwin.nix {
+              inherit system;
+              inherit username;
+              inherit pkgs;
+              make-darwinConfiguration =
+                nix-darwin.lib.darwinSystem;
+            };
+          };
+      combine-configs = configs: nixpkgs.lib.foldr nixpkgs.lib.recursiveUpdate { } configs;
+    in
+    combine-configs [
+      (nix-darwin-bin-and-config "x86_64-darwin")
+      (nix-darwin-bin-and-config "aarch64-darwin")
+      (home-manager-bin-and-config "x86_64-darwin")
+      (home-manager-bin-and-config "aarch64-darwin")
+      (home-manager-bin-and-config "x86_64-linux")
+      (home-manager-bin-and-config "aarch64-linux")
     ];
 }
