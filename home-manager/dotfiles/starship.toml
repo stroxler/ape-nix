@@ -1,0 +1,47 @@
+# The full set of options (default prompt) is subject to change, you can find
+# the latest in the docs at https://starship.rs/config/#prompt
+format = """
+$username\
+$hostname\
+$directory\
+$env_var\
+$shell\
+$git_branch\
+$git_status\
+$git_state\
+$python\
+    \
+$cmd_duration\
+$line_break\
+$shell\
+$character"""
+
+[username]
+style_user = 'blue'
+style_root = 'bold yellow'
+format = '[$user@]($style)'
+
+[hostname]
+style = 'blue'
+format = '[$hostname:]($style)'
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+style = "yellow"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[cmd_duration]
+min_time = 100  # milliseconds
+show_milliseconds = true
+style = 'green'
+format = '[took $duration]($style)'
+
+[character]
+success_symbol = '[>](blue)'
+error_symbol = '[x](red)'
+
+[env_var.TMUX_PANE]
+variable = 'TMUX_PANE'
+default = ''
+format = '[\[$env_value\]](green) '
