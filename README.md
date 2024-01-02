@@ -1,143 +1,58 @@
 # My nix-based setup: `ape-nix`
 
-As of today, I use a combination of ad-hoc docs to help me initialize a
-computer and my `dotconfar` to configure most of it (with a number of things,
-including emacs and vim, not really controlled by `dotconfar`).
-
-I'm trying to move away from this toward a nix-based setup for both
-initializing and configuring my system; at this stage `ape-nix` is an
-experimental project to do so.
-
-For now, I'm using only `home-manager`; I've seen that `nix-darwin` could be
-really useful because there are many gui settings I care about too, but my work
-computers are Centos-based so I want to make sure I learn the basic home
-manager flow, which should apply to non-nixos distros, before I wrap
-home-manager in nix-darwin.
-
-Also I'm not yet attempting to generalize over multiple machines; at this point
-the flake is only usable on my new Apple Silicon macbook. I'll need to do more
-work before I can use it on centos work machines or my older intel-based
-laptop.
-
-# How to use nix and home-manager
-
-I assume you're using flake-enabled nix. This happens by default if you use
-the Determinate Nix installer, otherwise you'll have to download the flakes
-tool and enable it in your nix configuration.
-
-To bootstrap this setup on a suitable machine (at the moment this first stage
-would work on any Apple Silicon macbook), just run `nix build .`, which will
-build the `defaultPackage.${system}` for the current system.
-
-At that point, you will have a `results/` directory, and you should have
-`results/bin/home-manager`.
-
-Next, you can run
+You can see how I set up the config by running
+```bash
+bash show-bootstrap-commands.sh
 ```
-result/bin/home-manager --flake .#aarch64-darwin switch
-```
-to actually run home manager configured for `aarch64-darwin`.
-
-Note that the namespacing of the home configuration to point at isn't super
-obvious; home-manager expects the key name to live inside `homeConfigurations`
-(it will look in some other places too).
-
-The name of the configuration is arbitrary if you specify it directly; I'm
-using the system name for simplicitly.
-
-# What's actually going on here?
-
-We need to construct an attribute set that has:
-- a key `defaultPackage.${system}` for the current system, in order
-  to get the appropriate home-manager executable.
-- a key `homeConfigurations.<config-name>` for whatever config we want to
-  build; becuase of the nature of nixpkgs this will have to be at least as fine
-  grained as `${system}` because you have to pick a system appropriate `pkgs`
-  in order to resolve anything at all. It could be as fine-grained
-  as you want (e.g. a config per machine).
-  - Home manager has some defaults for how to choose the config-name,
-    for example it will try using the username and host to guess, but
-    I actually prefer the approach of not using a "magic" name and
-    explicitly setting the name.
-  - For the moment I'm tentatively expecting my configs to be at the
-    same granularity as system, but it's easy to see how I might want finer
-    groupings (e.g. if I eventually want divergent work vs personal setups
-    then I could separate them).
-
-How I actually create that is currently manual because I want to use the nix
-language rather than magic libraries at least at first:
- - my whole config is constructed inside of a `foldl' recursiveUpdate` to
-   merge a bunch of smaller attribute sets, which will eventually allow me
-   to parametrize multiple configs based on the system (and potentially anything
-   else).
- - for the moment, I'm only actually defining a `macos-silicon`, but I have
-   the plubming in place to define other configurations, and I prove that the
-   plumbing works by defining a defaultPackage for x86_64-darwin. You can see
-   that this works by running `nix flake show .`.
-
-# What goes into a home-manager configuration?
-
-It appears that at the minimum you must pass it an attrset containing `pkgs`
-and `modules`. The former is a handle to nixpkgs for one system; the latter is
-a list of home-manager modules.
-
-A home-manager module can be either an attrset or a function that takes
-an attrset provided by home-manager (which will include a few things, one of
-them `pkgs`) and returns an attrset.
-
-The contents of the attrset from a module is any collection of keys as described
-in [the manual](https://nix-community.github.io/home-manager/options.xhtml).
-
-My preference for the moment is to make my modules attrsets already rather than
-functions, the reason being that this allows me to do more work in nix myself
-rather than relying on magic plumbing from home-manager; for example I do need
-`pkgs`, but I can pass it down directly rather than handing it off java-beans
-style.
-
-I prefer this for two reasons:
-- It makes control flow more explicit, which is nice while I'm getting used
-  to nix.
-- It makes it possible for me to pass extra keys that home-manager may not know
-  about, for example if I need to have conditional logic based on `system` or
-  some other configuration-specific information then I can just pass it down
-  myself using the nix language, without worrying about the "home-manager" way
-  of doing it.
-  - This may come at the price of uglier syntax, but I'm basically choosing to
-    use a programming language as my abstraction instead of a framework, which
-    in my experience is a better bet (because languages are composable and
-    usually easy to document in near-perfect detail, frameworks are not).
+which prints out the steps to bootstrap a system (some steps are only run once,
+like setting up nix and homebrew; some should be rerun later as config changes
+like the `nix-darwin` and `home-manager` setups).
 
 
-Note that if you mess something up, you'll often get a complaint about a
-missing `activationPackage`. This complaint is coming directly from nix, not
-from home-manager: what it actually means is that the function that
-*constructs* the actual nix config to power home manager
-(`home-manager.lib.homeManagerConfiguration`) did not execute successfully.
+## Existing configurations to port
 
-So if you get that error, what you want to make sure of is that:
-- `homeConfigurations.<name-of-config>` exists
-- its value is the result of calling `home-manager.lib.homeManagerConfiguration`
-- the attrset passed to the call ^^ was valid (so it must include at the very
-  least a `pkgs` and a list `modules`.
+I have earlier bootstrapping setups at `ape_osx` and `dotconfar`.
 
-# Some more notes
+The things I still need to port:
+- doom emacs and spacemacs installs from `ape_osx`
+- iterm2 colors from `ape_osx`
+- basic neovim setup from `ape_osx`
+- emacs config from `dotconfar`, including:
+  - runemacs (maybe remake it using straight.el?)
+  - doom config
+  - .spacemacs
+  - chemacs setup
 
-To edit nix files, for the moment I am just borrowing `zmre`'s setup. If you have
-nix with flakes set up you can just run:
-```
-nix run github:/zmre/pwnvim # (optionally filename)
-```
-to drop into a neovim session with great nix language support hooked up; it's
-a huge help to have this when hacking nix configs.
+## Backlog of things to do
 
-To debug a flake's structure, you can use `getFlake` and poke at it in the nix repl.
-Here's a handy command:
-```
-nix repl --expr '{flake = builtins.getFlake "path:'$(pwd)'"; }'
-```
-which will drop you into a repl where `flake` is bound to the current directory's
-flake output; you can then interactively explore the data.
+Vim:
+- Set up some simple neovim configs:
+  - A bare-bones config to use as my default
+  - A slightly fancier but simple setup using language servers
+- Set up some more elaborate neovim configs:
+  - A LazyVim setup
+  - Some kind of lazy.vim from scratch
+    - Figure out how to use lazy.lock!!
+  - Try the aniseed from scratch demo
+- Make some nixified vims:
+  - Maybe look at zmre's simpler example first, then...
+  - Figure out how pwnvim and pwnneovide work
+  - Start making some of my own neovim setups?
+- Learn some basic lua
+  - Ideally code up a toy PL in lua to help me learn
+  - It might be worth trying to use lua for interview prep someday
+  - It might be interesting to try one of the game-scripting setups
+  - It might be interesting to look at protoplug someday
 
-This is more powerful than `nix flake show`, which will only really show packages
-and other default flake data whereas tools like `home-manager` and `nix-darwin`
-interpret custom data in flake outputs.
+Emacs:
+- Go through some elisp resources
+  - There are several great playlists / stand-alone videos on this
+  - Ideally I should really try making some PL tools, lisp is great for this
+- 
+
+General editor:
+- Learn to edit lisps
+  - Paredit exists in both the vim and emacs ecosystems
+  - There are quite a number of additional tools out there
+    - I'm mostly looking for vim-oriented approaches
+    - That said, I'd consider trying to use emacs-mode for lisp
