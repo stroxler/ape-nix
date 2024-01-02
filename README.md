@@ -130,3 +130,14 @@ nix run github:/zmre/pwnvim # (optionally filename)
 to drop into a neovim session with great nix language support hooked up; it's
 a huge help to have this when hacking nix configs.
 
+To debug a flake's structure, you can use `getFlake` and poke at it in the nix repl.
+Here's a handy command:
+```
+nix repl --expr '{flake = builtins.getFlake "path:'$(pwd)'"; }'
+```
+which will drop you into a repl where `flake` is bound to the current directory's
+flake output; you can then interactively explore the data.
+
+This is more powerful than `nix flake show`, which will only really show packages
+and other default flake data whereas tools like `home-manager` and `nix-darwin`
+interpret custom data in flake outputs.

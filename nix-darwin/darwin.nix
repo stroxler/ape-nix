@@ -1,5 +1,6 @@
 {
   system,
+  owner,
   username,
   pkgs,
   make-darwinConfiguration,
@@ -67,13 +68,19 @@ make-darwinConfiguration {
           "clipy"
           "emacs"
           "firefox"
-          "google-chrome"
-          "iterm2"
-	  "obs"
+          "obs"
           "spotify"
           "visual-studio-code"
-	  "zoom"
-        ];
+	        "zoom"
+        ] ++ (
+          if owner == "work"
+          then []
+          else [
+            "iterm2"
+            "google-chrome"
+          ]
+        ]
+        );
       };
       security.pam.enableSudoTouchIdAuth = true;
     }
