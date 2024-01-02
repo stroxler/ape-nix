@@ -48,9 +48,18 @@ Emacs:
 - Go through some elisp resources
   - There are several great playlists / stand-alone videos on this
   - Ideally I should really try making some PL tools, lisp is great for this
-- 
+- Play with some configs:
+  - Make a bare-bones setup to use as an elisp playground
+  - Review emacs-from-scratch, start reading some more
+  - Start spending more time in doom
+    - Use it for my local ocaml development
+      - For local development, vscode has few real advantages
+    - Read more about it, about how to customize things
+  - Try out spacemacs again?
 
 General editor:
+- Learn to hook all editors up to direnv
+  - Learn to use direnv with nix
 - Learn to edit lisps
   - Paredit exists in both the vim and emacs ecosystems
   - There are quite a number of additional tools out there
