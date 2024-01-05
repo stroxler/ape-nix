@@ -6,7 +6,7 @@
   ...
 }: let
   homeDirectory =
-    if builtins.elemAt (builtins.split "-" system) == "darwin"
+    if (builtins.elemAt (builtins.split "-" system) 2)== "darwin"
     then "/Users/${username}"
     else "/home/${username}";
 in
@@ -52,6 +52,27 @@ in
           home-manager.enable = true;
           bash.enable = true;
           fish.enable = true;
+        };
+      }
+      {
+        programs.bat = {
+          enable = true;
+          #extraPackages = with pkgs.bat-extras; [ batman batgrep ];
+          config = {
+            theme = "Dracula"; # I like the TwoDark colors better, but want bold/italic in markdown docs
+            #pager = "less -FR";
+            pager = "page -WO -q 90000";
+            italic-text = "always";
+            style = "plain"; # no line numbers, git status, etc... more like cat with colors
+          };
+        };
+      }
+      {
+        programs.direnv = {
+          enable = true;
+          enableZshIntegration = true;
+          enableNushellIntegration = true;
+          nix-direnv.enable = true;
         };
       }
       {
