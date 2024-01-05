@@ -47,7 +47,7 @@ if [[ $OS == 'darwin' ]]; then
 
 	echo "# Build and run darwin-rebuild (nix-darwin)"
 	echo "pushd $(pwd)/nix-darwin"
-	echo "  nix run . -- --flake '.${SYSTEM}-${OWNER}' switch"
+	echo "  nix run . -- --flake '.#${SYSTEM}-${OWNER}' switch"
 	echo "popd"
 	echo "# (end darwin-rebuild)"
 	echo ""
@@ -56,7 +56,7 @@ fi
 
 echo "# Build and run home manager on all systems"
 echo "pushd $(pwd)/home-manager"
-echo "  nix run -- --flake '.${SYSTEM}' switch"
+echo "  nix run . -- --flake '.#${SYSTEM}' switch"
 echo "popd"
 echo "# (end home-manager)"
 echo ""
