@@ -7,9 +7,7 @@ $directory\
 $env_var\
 $shell\
 $git_branch\
-$git_status\
-$git_state\
-$python\
+$direnv\
     \
 $cmd_duration\
 $line_break\
@@ -20,6 +18,9 @@ $character"""
 style_user = 'blue'
 style_root = 'bold yellow'
 format = '[$user@]($style)'
+
+[direnv]
+format = '[$symbol$loaded/$allowed]($style) '
 
 [hostname]
 style = 'blue'
