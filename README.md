@@ -25,6 +25,10 @@ The things I still need to port:
 
 ## Backlog of things to do
 
+Shell:
+- I started working on a shell commands file in home-manager/dotfiles
+  but I haven't hooked it up to nix yet.
+
 Vim:
 - Set up some simple neovim configs:
   - A bare-bones config to use as my default
