@@ -1,3 +1,17 @@
+# Remember to commit
+
+Nix flakes will refuse to use a flake file that isn't tracked
+by version control when in a git repo.
+
+In itself this is fine, but when you first add a `flake.nix` the
+error is truly awful, you'll see something along the lines of
+```
+error: getting status of '/nix/store/rib8wshq9fb2953jz9xd2v3nk29qnqp8-source/ch1/flake.nix': No such file or directory
+```
+with no hints whatsoever that the problem is just git integration.
+
+# How a flake is organized, how to relate it to flake commands
+
 Nix commands target different parts of a config.
 
 - The nix commands generally look for `packages.<system>` subkeys:
