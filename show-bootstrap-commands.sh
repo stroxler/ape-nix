@@ -29,7 +29,7 @@ CONFIGURATION="${ARCH}-${OS}--${OWNER}"
 echo "# Bootstrapping instructions for"
 echo "#  operating system: ${OS}"
 echo "#  architecture: ${ARCH}"
-echo "#  owenr: ${OWNER}"
+echo "#  owner: ${OWNER}"
 echo ""
 echo ""
 
@@ -47,7 +47,7 @@ if [[ $OS == 'darwin' ]]; then
 
 	echo "# Build and run darwin-rebuild (nix-darwin)"
 	echo "pushd $(pwd)/nix-darwin"
-	echo "  nix run . -- --flake '.#${SYSTEM}-${OWNER}' switch"
+	echo "  nix run . -- --flake '.#${SYSTEM}--${OWNER}' switch"
 	echo "popd"
 	echo "# (end darwin-rebuild)"
 	echo ""
