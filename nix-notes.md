@@ -10,6 +10,16 @@ error: getting status of '/nix/store/rib8wshq9fb2953jz9xd2v3nk29qnqp8-source/ch1
 ```
 with no hints whatsoever that the problem is just git integration.
 
+# Finding old nixpkgs
+
+If you are trying to nixify an old repository, it's likely you'll
+need an old pin of nixpkgs.
+
+It's actually not trivial to find a listing of the old lts releases,
+but you can poke around the releases page at
+https://releases.nixos.org/?prefix=nixpkgs/
+to find them.
+
 # How a flake is organized, how to relate it to flake commands
 
 Nix commands target different parts of a config.
