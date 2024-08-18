@@ -102,8 +102,6 @@
                 [
                   "rectangle"
                   "clipy"
-                  "emacs"
-                  "firefox"
                   "obs"
                   "spotify"
                 ]
@@ -116,6 +114,8 @@
                     "google-crhome"
                     "visual-studio-code"
                     "zoom"
+                    "firefox"
+                    "emacs"
                   ]
                 );
             };
