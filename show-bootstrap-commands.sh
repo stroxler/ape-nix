@@ -47,6 +47,7 @@ if [[ $OS == 'darwin' ]]; then
 
 	echo "# Build and run darwin-rebuild (nix-darwin)"
 	echo "pushd $(pwd)/nix-darwin"
+	echo "  sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin"
 	echo "  nix run . -- --flake '.#${SYSTEM}--${OWNER}' switch"
 	echo "popd"
 	echo "# (end darwin-rebuild)"
