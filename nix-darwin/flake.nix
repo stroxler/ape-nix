@@ -104,6 +104,8 @@
                   "clipy"
                   "obs"
                   "spotify"
+                  "wezterm"
+                  "zed"
                 ]
                 ++ (
                   # Some programs are IT-managed on my work machine, so exclude them.
