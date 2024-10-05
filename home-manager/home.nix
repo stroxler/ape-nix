@@ -23,6 +23,19 @@
     # Put binaries on path
     export PATH="$HOME/bin:$PATH"
   '';
+  zshProfileExtra = ''
+    if [ -e "$HOME/.zsh_plugins.zsh" ]; then
+      source ~/.zsh_plugins.zsh
+    else
+      alias antidote-bundle='antidote bundle <~/.zsh_plugins.txt >~/.zsh_plugins.zsh'
+      echo 'No antidote plugins found.'
+      echo 'Run antiodote-bundle (setting a proxy if needed) to fetch'
+    fi
+
+    # Set up/down arrow in zsh to be fish-like
+    bindkey '^[[A' history-substring-search-up # or '\eOA'
+    bindkey '^[[B' history-substring-search-down # or '\eOB'
+  '';
 in
   make-homeConfiguration {
     inherit pkgs;
@@ -52,6 +65,7 @@ in
           file = {
             ".config/starship.toml".source = ./dotfiles/starship.toml;
             ".config/gitignore.conf".source = ./dotfiles/gitignore.conf;
+            ".zsh_plugins.txt".source = ./dotfiles/.zsh_plugins.txt;
             # Note: .inputrc only affects readline using tools, which includes
             # bash but not zsh (bindkey directives control this in zsh).
             ".inputrc".text = ''
@@ -118,18 +132,8 @@ in
           enable = true;
           antidote = {
             enable = true;
-            plugins = [
-              "zsh-users/zsh-syntax-highlighting"
-              "zsh-users/zsh-autosuggestions"
-              "zsh-users/zsh-history-substring-search"
-            ];
           };
-          envExtra = ''
-            # Set up/down arrow in zsh
-            bindkey '^[[A' history-substring-search-up # or '\eOA'
-            bindkey '^[[B' history-substring-search-down # or '\eOB'
-          '';
-          profileExtra = shellProfileExtra;
+          profileExtra = shellProfileExtra + zshProfileExtra;
         };
       }
       {
