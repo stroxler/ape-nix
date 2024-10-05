@@ -33,12 +33,14 @@ echo "#  owner: ${OWNER}"
 echo ""
 echo ""
 
-echo "# Bootstrap nix with the determinate nix installer"
-echo "curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install"
-echo "# (end bootstrap nix)"
-echo ""
-
 if [[ $OS == 'darwin' ]]; then
+
+	echo "# Bootstrap nix with the determinate nix installer"
+	echo "#   (Note: I'm not 100% sure the id overrides will work in macos, they are needed for work machines)"
+	echo "curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix ~/_bootstrap_determinate_nix.sh"
+	echo "bash ~/_bootstrap_determinate_nix.sh install --no-confirm"
+	echo " # (end bootstrap nix)"
+	echo ""
 
 	echo "# Bootstrap homebrew for nix-darwin to use with casks"
 	echo '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
@@ -53,6 +55,21 @@ if [[ $OS == 'darwin' ]]; then
 	echo "# (end darwin-rebuild)"
 	echo ""
 
+else
+
+	echo "# Bootstrap single-user nix + flakes with the vanilla nix installer"
+	echo "curl -L https://nixos.org/nix/install >  ~/_bootstrap_standard_nix.sh"
+	echo "bash ~/_bootstrap_standard_nix --no-deamon --yes"
+	echo "mkdir -p ~/.config/nix/nix.conf"
+	echo "echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf"
+	echo ""
+
+	echo "# Back up the default dotfiles"
+	echo "mv ~/.profile ~/.profile.pre-hm || true"
+	echo "mv ~/.bash_profile ~/.bash_profile.pre-hm || true"
+	echo "mv ~/.bashrc ~/.bashrc.pre-hm || true"
+	echo "mv ~/.config/fish/config.fish ~/.config/fish/config.fish.pre-hm || true"
+	echo "mv ~/.zshrc ~/.zshrc.pre-hm || true"
 fi
 
 echo "# Build and run home manager on all systems"
