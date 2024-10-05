@@ -9,6 +9,20 @@
     if (builtins.elemAt (builtins.split "-" system) 2) == "darwin"
     then "/Users/${username}"
     else "/home/${username}";
+  shellProfileExtra = ''
+    # Load vanilla nix profile, if it exists
+    if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    	. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+    fi
+
+    # Load home-manager session vars, if they exist
+    if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
+    	. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+    fi
+
+    # Put binaries on path
+    export PATH="$HOME/bin:$PATH"
+  '';
 in
   make-homeConfiguration {
     inherit pkgs;
@@ -96,20 +110,7 @@ in
       {
         programs.bash = {
           enable = true;
-          profileExtra = ''
-            # Load vanilla nix profile, if it exists
-            if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-            	. "$HOME/.nix-profile/etc/profile.d/nix.sh"
-            fi
-
-            # Load home-manager session vars, if they exist
-            if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-            	. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-            fi
-
-            # Put binaries on path
-            export $PATH="$HOME/bin:PATH"
-          '';
+          profileExtra = shellProfileExtra;
         };
       }
       {
@@ -128,20 +129,7 @@ in
             bindkey '^[[A' history-substring-search-up # or '\eOA'
             bindkey '^[[B' history-substring-search-down # or '\eOB'
           '';
-          profileExtra = ''
-            # Load vanilla nix profile, if it exists
-            if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-            	. "$HOME/.nix-profile/etc/profile.d/nix.sh"
-            fi
-
-            # Load home-manager session vars, if they exist
-            if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then
-            	. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-            fi
-
-            # Put binaries on path
-            export $PATH="$HOME/bin:PATH"
-          '';
+          profileExtra = shellProfileExtra;
         };
       }
       {
