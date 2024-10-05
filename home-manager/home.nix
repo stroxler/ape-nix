@@ -50,7 +50,6 @@ in
       {
         programs = {
           home-manager.enable = true;
-          bash.enable = true;
           fish.enable = true;
         };
       }
@@ -96,6 +95,22 @@ in
         };
       }
       {
+        programs.bash = {
+				  enable = true;
+					profileExtra = ''
+						# Load vanilla nix profile, if it exists
+						if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
+							. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+						fi
+
+						# Load home-manager session vars, if they exist
+						if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then 
+							. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+						fi
+					'';
+				};
+			}
+      {
         programs.zsh = {
           enable = true;
           antidote = {
@@ -111,6 +126,17 @@ in
             bindkey '^[[A' history-substring-search-up # or '\eOA'
             bindkey '^[[B' history-substring-search-down # or '\eOB'
           '';
+					profileExtra = ''
+						# Load vanilla nix profile, if it exists
+						if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then 
+							. "$HOME/.nix-profile/etc/profile.d/nix.sh"
+						fi
+
+						# Load home-manager session vars, if they exist
+						if [ -e "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" ]; then 
+							. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+						fi
+					'';
         };
       }
       {
