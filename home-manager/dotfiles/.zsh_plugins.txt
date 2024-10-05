@@ -1,3 +1,6 @@
+# Use full urls becasue otherwise antidote tries to use ssh and
+# prompts for login credentials.
+
 git@github.com:zsh-users/zsh-syntax-highlighting.git
 git@github.com:zsh-users/zsh-autosuggestions.git
 git@github.com:zsh-users/zsh-history-substring-search.git

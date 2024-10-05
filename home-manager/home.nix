@@ -26,15 +26,15 @@
   zshProfileExtra = ''
     if [ -e "$HOME/.zsh_plugins.zsh" ]; then
       source ~/.zsh_plugins.zsh
+
+      # Set up/down arrow in zsh to be fish-like
+      bindkey '^[[A' history-substring-search-up # or '\eOA'
+      bindkey '^[[B' history-substring-search-down # or '\eOB'
     else
       alias antidote-bundle='antidote bundle <~/.zsh_plugins.txt >~/.zsh_plugins.zsh'
-      echo 'No antidote plugins found.'
-      echo 'Run antiodote-bundle (setting a proxy if needed) to fetch'
+      echo 'No antidote plugins found. Assuming ssh is set up, run antidote-bundle to pull.'
     fi
 
-    # Set up/down arrow in zsh to be fish-like
-    bindkey '^[[A' history-substring-search-up # or '\eOA'
-    bindkey '^[[B' history-substring-search-down # or '\eOB'
   '';
 in
   make-homeConfiguration {
