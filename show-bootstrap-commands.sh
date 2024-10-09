@@ -64,13 +64,15 @@ else
 	echo "echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf"
 	echo ""
 
-	echo "# Back up the default dotfiles"
-	echo "mv ~/.profile ~/.profile.pre-hm || true"
-	echo "mv ~/.bash_profile ~/.bash_profile.pre-hm || true"
-	echo "mv ~/.bashrc ~/.bashrc.pre-hm || true"
-	echo "mv ~/.config/fish/config.fish ~/.config/fish/config.fish.pre-hm || true"
-	echo "mv ~/.zshrc ~/.zshrc.pre-hm || true"
 fi
+echo "# Back up the default dotfiles"
+echo "mv ~/.profile ~/.profile.pre-hm 2> /dev/null || true"
+echo "mv ~/.bash_profile ~/.bash_profile.pre-hm 2> /dev/null || true"
+echo "mv ~/.bashrc ~/.bashrc.pre-hm 2> /dev/null || true"
+echo "mv ~/.config/fish/config.fish ~/.config/fish/config.fish.pre-hm 2> /dev/null || true"
+echo "mv ~/.zprofile ~/.zprofile.pre-hm 2> /dev/null || true"
+echo "mv ~/.zshrc ~/.zshrc.pre-hm 2> /dev/null || true"
+echo ""
 
 echo "# Build and run home manager on all systems"
 echo "pushd $(pwd)/home-manager"
