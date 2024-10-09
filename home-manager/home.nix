@@ -136,6 +136,7 @@ in
             ".config/starship.toml".source = ./dotfiles/starship.toml;
             ".config/gitignore.conf".source = ./dotfiles/gitignore.conf;
             ".zsh_plugins.txt".source = ./dotfiles/.zsh_plugins.txt;
+            ".vimrc".source = ./dotfiles/.vimrc;
             ".wezterm.lua".text = ''
               local wezterm = require 'wezterm'
               local config = wezterm.config_builder()
