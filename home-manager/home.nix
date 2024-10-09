@@ -20,8 +20,9 @@
     	. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
     fi
 
-    # Put binaries on path
-    export PATH="$HOME/bin:$PATH"
+    # Put binaries on path. I tend to use ~/bin for standard tools and
+    # ~/local for adhoc or project-specific stuff.
+    export PATH="$HOME/local:$HOME/bin:$PATH"
   '';
   zshProfileExtra = ''
     if [ -e "$HOME/.zsh_plugins.zsh" ]; then
