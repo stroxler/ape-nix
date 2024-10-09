@@ -59,22 +59,6 @@ in
           ];
         };
       }
-      # Dotfiles not managed via nix configs
-      {
-        home = {
-          file = {
-            ".config/starship.toml".source = ./dotfiles/starship.toml;
-            ".config/gitignore.conf".source = ./dotfiles/gitignore.conf;
-            ".zsh_plugins.txt".source = ./dotfiles/.zsh_plugins.txt;
-            # Note: .inputrc only affects readline using tools, which includes
-            # bash but not zsh (bindkey directives control this in zsh).
-            ".inputrc".text = ''
-              "\e[A": history-search-backward
-              "\e[B": history-search-forward
-            '';
-          };
-        };
-      }
       {
         programs = {
           home-manager.enable = true;
@@ -142,6 +126,35 @@ in
           enableBashIntegration = true;
           enableFishIntegration = true;
           enableZshIntegration = true;
+        };
+      }
+      # Dotfiles not managed via nix configs
+      {
+        home = {
+          file = {
+            ".config/starship.toml".source = ./dotfiles/starship.toml;
+            ".config/gitignore.conf".source = ./dotfiles/gitignore.conf;
+            ".zsh_plugins.txt".source = ./dotfiles/.zsh_plugins.txt;
+            ".wezterm.lua".text = ''
+              local wezterm = require 'wezterm'
+              local config = wezterm.config_builder()
+              config.color_scheme = 'Seafoam Pastel (Gogh)'
+              config.keys = {
+                {
+                  key = 'd',
+                  mods = 'CMD',
+                  action = wezterm.action.SplitHorizontal,
+                 },
+              }
+              return config
+            '';
+            # Note: .inputrc only affects readline using tools, which includes
+            # bash but not zsh (bindkey directives control this in zsh).
+            ".inputrc".text = ''
+              "\e[A": history-search-backward
+              "\e[B": history-search-forward
+            '';
+          };
         };
       }
     ];
