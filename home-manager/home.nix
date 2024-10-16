@@ -140,7 +140,7 @@ in
             ".wezterm.lua".text = ''
               local wezterm = require 'wezterm'
               local config = wezterm.config_builder()
-              config.color_scheme = 'Sea Shells (Gogh)'
+              config.color_scheme = 'Aci (Gogh)'
               config.keys = {
                 {
                   key = 'd',
