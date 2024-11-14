@@ -140,7 +140,7 @@ in
             ".wezterm.lua".text = ''
               local wezterm = require 'wezterm'
               local config = wezterm.config_builder()
-              config.color_scheme = 'Eldorado dark (terminal.sexy)'
+              config.color_scheme = 'Everforest Dark (Gogh)'
               config.keys = {
                 {
                   key = 'd',
