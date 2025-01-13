@@ -140,7 +140,7 @@ in
             ".wezterm.lua".text = ''
               local wezterm = require 'wezterm'
               local config = wezterm.config_builder()
-              config.color_scheme = 'Monokai (terminal.sexy)'
+              config.color_scheme = 'Mostly Bright (terminal.sexy)'
               config.keys = {
                 {
                   key = 'd',
