@@ -1,10 +1,9 @@
 {
   description = "stroxler system setup with nix";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-23.11";
-    nixpkgsUnstable.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-darwin = {
@@ -15,7 +14,6 @@
   outputs = {
     self,
     nixpkgs,
-    nixpkgsUnstable,
     home-manager,
     nix-darwin,
     ...
@@ -60,35 +58,24 @@
                 KeyRepeat = 5;
               };
             };
-            nix.useDaemon = true;
             nix.extraOptions = ''
               experimental-features = nix-command flakes
             '';
             documentation.enable = true;
             environment = {
-              shells = with pkgs; [bash zsh];
-              loginShell = pkgs.zsh;
+              shells = with pkgs; [zsh bash];
               systemPackages = [pkgs.coreutils];
               systemPath = ["/opt/homebrew/bin"];
               pathsToLink = ["/Applications"];
             };
             fonts = {
-              fontDir.enable = true; # only allow nix to control fonts
-              fonts = [
-                (pkgs.nerdfonts.override {
-                  fonts = [
-                    "FiraCode"
-                    "Hasklig"
-                    "DroidSansMono"
-                    "DejaVuSansMono"
-                    "iA-Writer"
-                    "JetBrainsMono"
-                    "Meslo"
-                    "SourceCodePro"
-                    "Inconsolata"
-                    "NerdFontsSymbolsOnly"
-                  ];
-                })
+              packages = [
+                pkgs.nerd-fonts.fira-code
+                pkgs.nerd-fonts.hasklug
+                pkgs.nerd-fonts.droid-sans-mono
+                pkgs.nerd-fonts.dejavu-sans-mono
+                pkgs.nerd-fonts.jetbrains-mono
+                pkgs.nerd-fonts.inconsolata
               ];
             };
             homebrew = {
@@ -102,26 +89,9 @@
                 [
                   "rectangle"
                   "clipy"
-                  "obs"
-                  "spotify"
-                  "wezterm"
-                  "zed"
-                ]
-                ++ (
-                  # Some programs are IT-managed on my work machine, so exclude them.
-                  if (owner == "work")
-                  then []
-                  else [
-                    "iterm2"
-                    "google-crhome"
-                    "visual-studio-code"
-                    "zoom"
-                    "firefox"
-                    "emacs"
-                  ]
-                );
+                ];
             };
-            security.pam.enableSudoTouchIdAuth = true;
+            security.pam.services.sudo_local.touchIdAuth = true;
           }
         ];
       };
