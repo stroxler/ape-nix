@@ -2,7 +2,7 @@
   system,
   username,
   pkgs,
-  neovim-nightly-overlay,
+  pkgs-u,
   make-homeConfiguration,
   ...
 }: let
@@ -42,10 +42,6 @@ in
   make-homeConfiguration {
     inherit pkgs;
     modules = [
-      # Overlay nightly neovim
-      { 
-        nixpkgs.overlays = [ neovim-nightly-overlay.overlays.default ];
-      }
       # Basic metadata
       {
         home = {
@@ -58,7 +54,7 @@ in
       {
         home = {
           packages = [
-            pkgs.neovim
+            pkgs-u.neovim
             pkgs.ripgrep
             pkgs.tree
             pkgs.eternal-terminal
