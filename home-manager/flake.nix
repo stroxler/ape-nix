@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
     nixpkgs-u.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixd.url = "github:nix-community/nixd";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,6 +13,7 @@
     self,
     nixpkgs,
     nixpkgs-u,
+    nixd,
     home-manager,
     ...
   }: let
@@ -43,6 +45,7 @@
         inherit username;
         inherit pkgs;
         inherit pkgs-u;
+        inherit nixd;
         make-homeConfiguration =
           home-manager.lib.homeManagerConfiguration;
       };

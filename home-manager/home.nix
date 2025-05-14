@@ -3,6 +3,7 @@
   username,
   pkgs,
   pkgs-u,
+  nixd,
   make-homeConfiguration,
   ...
 }: let
@@ -42,6 +43,9 @@ in
   make-homeConfiguration {
     inherit pkgs;
     modules = [
+      {
+        nixpkgs.overlays = [ nixd.overlays.default ];
+      }
       # Basic metadata
       {
         home = {
@@ -58,6 +62,7 @@ in
             pkgs.ripgrep
             pkgs.tree
             pkgs.eternal-terminal
+            pkgs.nixd
           ];
         };
       }
