@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+THIS_SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # Set defaults
 if [[ -z "$ARCH" ]]; then
 	ARCH="$(
@@ -48,7 +50,7 @@ if [[ $OS == 'darwin' ]]; then
 	echo ""
 
 	echo "# Build and run darwin-rebuild (nix-darwin)"
-	echo "pushd $(pwd)/nix-darwin"
+	echo "pushd ${THIS_SCRIPT_DIR}/nix-darwin"
 	echo "  sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin"
 	echo "  nix run . -- --flake '.#${SYSTEM}--${OWNER}' switch"
 	echo "popd"
@@ -75,7 +77,7 @@ echo "mv ~/.zshrc ~/.zshrc.pre-hm 2> /dev/null || true"
 echo ""
 
 echo "# Build and run home manager on all systems"
-echo "pushd $(pwd)/home-manager"
+echo "pushd ${THIS_SCRIPT_DIR}/home-manager"
 echo "  nix run . -- --flake '.#${SYSTEM}' switch"
 echo "popd"
 echo "# (end home-manager)"
