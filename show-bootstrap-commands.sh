@@ -61,7 +61,7 @@ else
 
 	echo "# Bootstrap single-user nix + flakes with the vanilla nix installer"
 	echo "curl -L https://nixos.org/nix/install >  ~/_bootstrap_standard_nix.sh"
-	echo "bash ~/_bootstrap_standard_nix --no-deamon --yes"
+	echo "bash ~/_bootstrap_standard_nix.sh --yes"
 	echo "mkdir -p ~/.config/nix/nix.conf"
 	echo "echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf"
 	echo ""
