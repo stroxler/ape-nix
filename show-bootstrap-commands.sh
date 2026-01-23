@@ -64,6 +64,7 @@ else
 	echo "bash ~/_bootstrap_standard_nix.sh --yes"
 	echo "mkdir -p ~/.config/nix/nix.conf"
 	echo "echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf"
+  echo ". ~/.nix-profile/etc/profile.d/nix.sh"
 	echo ""
 
 fi
