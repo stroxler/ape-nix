@@ -84,3 +84,6 @@ echo "  nix run . -- --flake '.#${SYSTEM}' switch"
 echo "popd"
 echo "# (end home-manager)"
 echo ""
+
+echo "# Possible extra setup commands"
+echo "antidote-bundle  # bootstraps zsh"
