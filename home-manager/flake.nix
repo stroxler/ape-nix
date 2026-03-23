@@ -1,11 +1,11 @@
 {
   description = "stroxler system setup with nix";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-25.11";
     nixpkgs-u.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixd.url = "github:nix-community/nixd";
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -37,8 +37,8 @@
       pkgs-u = pkgs-for-system system nixpkgs-u;
     in {
       packages.${system} = {
-        home-manager = home-manager.defaultPackage.${system};
-        default = home-manager.defaultPackage.${system};
+        home-manager = home-manager.packages.${system}.default;
+        default = home-manager.packages.${system}.default;
       };
       homeConfigurations.${system} = import ./home.nix {
         inherit system;

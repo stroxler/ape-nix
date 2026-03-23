@@ -58,7 +58,7 @@ in
       {
         home = {
           packages = [
-            pkgs-u.neovim
+            pkgs.neovim
             pkgs.ripgrep
             pkgs.tree
             pkgs.eternal-terminal
@@ -71,6 +71,11 @@ in
         programs = {
           home-manager.enable = true;
         };
+      }
+      {
+        programs.neovim.plugins = [
+	  pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+	];
       }
       {
         programs.bat = {
