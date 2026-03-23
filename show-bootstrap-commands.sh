@@ -86,4 +86,4 @@ echo "# (end home-manager)"
 echo ""
 
 echo "# Possible extra setup commands"
-echo "antidote-bundle  # bootstraps zsh"
+echo "antidote-bundle  # bootstraps zsh - if the history-search isn't working, you need this"
