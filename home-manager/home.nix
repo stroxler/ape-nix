@@ -101,16 +101,18 @@ in
       {
         programs.git = {
           enable = true;
-          userName = "Steven Troxler";
-          userEmail = "steven.troxler@gmail.com";
-          aliases = {
-            check = "checkout";
-            lg = "log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(blue)%s%C(reset) - %an%C(reset)%C(bold blue)%d%C(reset)' --all";
-          };
           ignores = [
             "result"
           ];
-          extraConfig = {
+          settings = {
+            user = {
+              name = "Steven Troxler";
+              email = "steven.troxler@gmail.com";
+            };
+            alias = {
+              check = "checkout";
+              lg = "log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(blue)%s%C(reset) - %an%C(reset)%C(bold blue)%d%C(reset)' --all";
+            };
             core = {
               editor = "nvim";
               excludesFile = "~/.config/gitignore.conf";

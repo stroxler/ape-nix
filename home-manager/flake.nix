@@ -25,7 +25,7 @@
         # needed mainly for Microsoft fonts
         config = {allowUnfree = true;};
       });
-    pkgs-for-system-u = system: nixpkgs
+    pkgs-for-system-u = system:
       import nixpkgs-u {
         inherit system;
 
