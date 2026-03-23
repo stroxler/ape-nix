@@ -64,7 +64,7 @@ else
 	echo "bash ~/_bootstrap_standard_nix.sh --yes"
 	echo "mkdir -p ~/.config/nix/nix.conf"
 	echo "echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf"
-  echo ". ~/.nix-profile/etc/profile.d/nix.sh"
+	echo "source ~/.nix-profile/etc/profile.d/nix.sh"
 	echo ""
 
 fi
@@ -75,6 +75,7 @@ echo "mv ~/.bashrc ~/.bashrc.pre-hm 2> /dev/null || true"
 echo "mv ~/.config/fish/config.fish ~/.config/fish/config.fish.pre-hm 2> /dev/null || true"
 echo "mv ~/.zprofile ~/.zprofile.pre-hm 2> /dev/null || true"
 echo "mv ~/.zshrc ~/.zshrc.pre-hm 2> /dev/null || true"
+echo "mv ~/.vimrc ~/.vimrc.pre-hm 2> /dev/null || true"
 echo ""
 
 echo "# Build and run home manager on all systems"
