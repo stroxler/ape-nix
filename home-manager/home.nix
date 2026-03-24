@@ -58,7 +58,8 @@ in
       {
         home = {
           packages = [
-            pkgs.neovim
+	    pkgs.cmake
+            pkgs.libvterm-neovim
             pkgs.ripgrep
             pkgs.tree
             pkgs.eternal-terminal
@@ -72,11 +73,19 @@ in
           home-manager.enable = true;
         };
       }
-      {
-        programs.neovim.plugins = [
-	  pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-	];
-      }
+			{
+				programs.neovim = {
+         enable = true;
+         package = pkgs.neovim-unwrapped; 
+         plugins = with pkgs.vimPlugins; [
+           lazy-nvim
+         ];
+          extraConfig = ''
+            lua << EOF
+            EOF
+          '';
+        };
+		  }
       {
         programs.bat = {
           enable = true;
