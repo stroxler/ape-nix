@@ -7,8 +7,9 @@
   make-homeConfiguration,
   ...
 }: let
+  isDarwin = (builtins.elemAt (builtins.split "-" system) 2) == "darwin";
   homeDirectory =
-    if (builtins.elemAt (builtins.split "-" system) 2) == "darwin"
+    if isDarwin
     then "/Users/${username}"
     else "/home/${username}";
   shellProfileExtra = ''
@@ -65,7 +66,7 @@ in
             pkgs.eternal-terminal
             pkgs.nixd
             pkgs.gh
-          ];
+          ] ++ (if isDarwin then [] else [pkgs.emacs]);
         };
       }
       {

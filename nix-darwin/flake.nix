@@ -87,6 +87,7 @@
               masApps = {};
               casks =
                 [
+                  "emacs"
                   "rectangle"
                   "clipy"
                 ];
