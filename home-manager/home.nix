@@ -60,6 +60,7 @@ in
         home = {
           packages = [
 	    pkgs.cmake
+            pkgs.neovim
             pkgs.libvterm-neovim
             pkgs.ripgrep
             pkgs.tree
@@ -74,19 +75,6 @@ in
           home-manager.enable = true;
         };
       }
-			{
-				programs.neovim = {
-         enable = true;
-         package = pkgs.neovim-unwrapped; 
-         plugins = with pkgs.vimPlugins; [
-           lazy-nvim
-         ];
-          extraConfig = ''
-            lua << EOF
-            EOF
-          '';
-        };
-		  }
       {
         programs.bat = {
           enable = true;
