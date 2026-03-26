@@ -78,20 +78,7 @@
                 pkgs.nerd-fonts.inconsolata
               ];
             };
-            homebrew = {
-              # nix-darwin prevents cli use of brew, so to search use
-              # the website at https://formulae.brew.sh/
-              enable = true;
-              caskArgs.no_quarantine = true;
-              global.brewfile = true;
-              masApps = {};
-              casks =
-                [
-                  "emacs"
-                  "rectangle"
-                  "clipy"
-                ];
-            };
+
             security.pam.services.sudo_local.touchIdAuth = true;
           }
         ];

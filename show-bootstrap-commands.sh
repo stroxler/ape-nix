@@ -49,6 +49,11 @@ if [[ $OS == 'darwin' ]]; then
 	echo "# (end bootstrap homebrew)"
 	echo ""
 
+	echo "# Install homebrew casks"
+	echo "bash ${THIS_SCRIPT_DIR}/casks/all.sh"
+	echo "# (end homebrew casks)"
+	echo ""
+
 	echo "# Build and run darwin-rebuild (nix-darwin)"
 	echo "pushd ${THIS_SCRIPT_DIR}/nix-darwin"
 	echo "  sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin"
