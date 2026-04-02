@@ -26,6 +26,11 @@
     # Put binaries on path. I tend to use ~/bin for standard tools and
     # ~/local for adhoc or project-specific stuff.
     export PATH="$HOME/local:$HOME/bin:$PATH"
+
+    # Source machine-local environment customization if present
+    if [ -e "$HOME/local-env.sh" ]; then
+      . "$HOME/local-env.sh"
+    fi
   '';
   zshProfileExtra = ''
     if [ -e "$HOME/.zsh_plugins.zsh" ]; then
@@ -53,6 +58,13 @@ in
           stateVersion = "23.11";
           username = "${username}";
           inherit homeDirectory;
+        };
+      }
+      # Session environment variables
+      {
+        home.sessionVariables = {
+          EDITOR = "vim";
+          PAGER = "less -R";
         };
       }
       # Profile packages not managed as programs
