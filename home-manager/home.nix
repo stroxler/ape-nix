@@ -67,6 +67,7 @@ in
             pkgs.eternal-terminal
             pkgs.nixd
             pkgs.gh
+            pkgs.nusmv
           ] ++ (if isDarwin then [] else [pkgs.emacs]);
         };
       }
