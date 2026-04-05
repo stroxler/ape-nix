@@ -64,7 +64,8 @@ in
       {
         home.sessionVariables = {
           EDITOR = "vim";
-          PAGER = "less -R";
+          PAGER = "less -R"; # primarily for nix itself, and some other man pages that need it
+          COLORTERM = "truecolor"; # for emacs
         };
       }
       # Profile packages not managed as programs
@@ -161,6 +162,7 @@ in
             ".config/gitignore.conf".source = ./dotfiles/gitignore.conf;
             ".zsh_plugins.txt".source = ./dotfiles/.zsh_plugins.txt;
             ".vimrc".source = ./dotfiles/.vimrc;
+            ".tmux.conf".source = ./dotfiles/.tmux.conf;
             ".wezterm.lua".text = ''
               local wezterm = require 'wezterm'
               local config = wezterm.config_builder()

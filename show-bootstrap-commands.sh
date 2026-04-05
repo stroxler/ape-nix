@@ -81,6 +81,7 @@ echo "mv ~/.config/fish/config.fish ~/.config/fish/config.fish.pre-hm 2> /dev/nu
 echo "mv ~/.zprofile ~/.zprofile.pre-hm 2> /dev/null || true"
 echo "mv ~/.zshrc ~/.zshrc.pre-hm 2> /dev/null || true"
 echo "mv ~/.vimrc ~/.vimrc.pre-hm 2> /dev/null || true"
+echo "mv ~/.tmux.conf ~/.tmux.conf.pre-hm 2> /dev/null || true"
 echo ""
 
 echo "# Build and run home manager on all systems"
